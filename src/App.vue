@@ -1,6 +1,7 @@
 <template>
-  <div id="app">
-    index
+  <div>
+    <el-button type="danger" plain>危险按钮</el-button>
+    <router-view></router-view>
   </div>
 </template>
 
