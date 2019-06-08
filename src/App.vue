@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <el-button type="danger" plain>危险按钮</el-button>
-    <router-view></router-view>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>

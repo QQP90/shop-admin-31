@@ -9,7 +9,11 @@ import VueRouter from "vue-router"
 // 引入axios组件
 import axios from "axios"
 // 引入Login组件
-import Login from "./components/Login.vue"
+import Login from "./pages/Login.vue"
+// 引入Register组件
+import Register from "./pages/Register.vue"
+// 引入Admin组件
+import Admin from "./pages/Admin.vue"
 
 // 注册axios组件
 Vue.use(axios);
@@ -26,7 +30,13 @@ Vue.prototype.$axios = axios
 // 组件配置路由
 const routes = [
   {
+    path:"/",component:Admin
+  },
+  {
     path:"/login",component:Login
+  },
+  {
+    path:"/register",component:Register
   }
 ]
 // 创建路由实例
