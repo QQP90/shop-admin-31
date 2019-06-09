@@ -1,48 +1,42 @@
 <template>
-  <div>
-    <el-container>
-      <el-aside width="auto">
-          <Menu :isShow="isShow" />
-      </el-aside>
-      <el-container>
-        <el-header>
-            <Header @click="handleClickShow" />
-        </el-header>
-        <el-main>
-           <Breadcrumbs />
-        </el-main>
-      </el-container>
-    </el-container>
-  </div>
+  <el-container>
+  <el-aside width="auto"><Menu :isShow="isShow"/></el-aside>
+  <el-container>
+    <el-header><Header @click="handleClickShow"/></el-header>
+    <el-main>
+      <Breadcrumbs/>
+      <!-- 添加admin子路由的占位符 -->
+      <router-view></router-view>
+    </el-main>
+  </el-container>
+</el-container>
 </template>
 
 <script>
-import Header from "../components/Header.vue";
-import Breadcrumbs from "../components/Breadcrumbs.vue";
+import Header from "../components/Header.vue"
 import Menu from "../components/Menu.vue"
+import Breadcrumbs from "../components/Breadcrumbs.vue"
 export default {
-    components:{
+      components:{
         Header,
-        Breadcrumbs,
-        Menu
-    },
-    data(){
+        Menu,
+        Breadcrumbs
+      },
+      data(){
         return {
-              isShow:false
+          isShow : false
         }
-      
-    },
-    methods:{
+      },
+      methods:{
         handleClickShow(){
-            this.isShow=!this.isShow
+          this.isShow=!this.isShow
         }
-    }
-
-};
+      }
+}
 </script>
 
 <style>
-  .el-header, .el-footer {
+   .el-header {
     color: #333;
     text-align: center;
     line-height: 60px;
@@ -58,7 +52,6 @@ export default {
   .el-main {
     background-color: #E9EEF3;
     color: #333;
-    /* line-height: 160px; */
   }
   
   body > div > .el-container {

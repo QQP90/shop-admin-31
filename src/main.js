@@ -14,9 +14,10 @@ import Login from "./pages/Login.vue"
 import Register from "./pages/Register.vue"
 // 引入Admin组件
 import Admin from "./pages/Admin.vue"
+import GoodsList from "./pages/GoodsList.vue"
+import CategryList from "./pages/CategryList.vue"
 
-// 注册axios组件
-Vue.use(axios);
+
 // 注册VueRouter
 Vue.use(VueRouter);
 // 注册组件element
@@ -30,13 +31,20 @@ Vue.prototype.$axios = axios
 // 组件配置路由
 const routes = [
   {
-    path:"/",component:Admin
+    path:"/",redirect:"/admin/goods-list"
   },
   {
     path:"/login",component:Login
   },
   {
-    path:"/register",component:Register
+    path:"/admin",component:Admin,meta:"后台管理", children:[
+      {
+        path:"goods-list", meta:"商品管理", component:GoodsList
+      },
+      {
+        path:"categry-list", meta:"栏目管理", component:CategryList
+      }
+    ]
   }
 ]
 // 创建路由实例

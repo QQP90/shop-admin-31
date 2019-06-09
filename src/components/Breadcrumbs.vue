@@ -1,19 +1,36 @@
 <template>
-  <div class="bread">
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">后台管理</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/' }">商品列表</el-breadcrumb-item>
-    </el-breadcrumb>
-  </div>
+<el-breadcrumb separator="/" class="Breadcrumbs">
+  <el-breadcrumb-item v-for="(item,index) in info" :key="index">
+    {{item}}
+  </el-breadcrumb-item>
+</el-breadcrumb>
 </template>
 
 <script>
-export default {};
+import { constants } from 'crypto';
+export default {
+  data(){
+    return {
+      info:[]
+    }
+  },
+  watch:{
+    $route(){
+      var arr = this.$route.matched
+      let info = []
+      arr.forEach(v=>{
+      info.push(v.meta)
+        
+      })
+     this.info = info
+    }
+  }
+}
 </script>
 
-<style scoped>
-.bread {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ddd;
-}
+<style>
+  .Breadcrumbs{
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
 </style>
