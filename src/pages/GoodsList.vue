@@ -102,6 +102,22 @@ methods: {
                 this.total = res.data.totalcount
             })
     },
+    deleteGoods(ID){
+         this.$axios({
+            url:`http://localhost:8899/admin/goods/del/${ID}`,
+            method:"GET"
+        }).then(res=>{
+                const {message , status} = res.data
+                if(status===0){
+                    this.$message.success("删除成功")
+                    // 请求列表数据
+                    this.getList()
+                }
+                if(status===1){
+                    this.$message.error(message)    
+                }
+            })
+    },
     // handleSelectionChange是选择每一项的时候触发
     handleSelectionChange(val) {
         this.ids = val
@@ -117,40 +133,13 @@ methods: {
             return v.id
         })
         const ids = arr.join(",")
-        this.$axios({
-            url:`http://localhost:8899/admin/goods/del/${ids}`,
-            method:"GET"
-        }).then(res=>{
-            //   console.log(res.data)
-                const {message , status} = res.data
-                if(status===0){
-                    this.$message.success("删除成功")
-                    // 请求列表数据
-                    this.getList()
-                }
-                if(status===1){
-                    this.$message.error(message)    
-                }
-            })
-        },
+        this.deleteGoods(ids)
+    },
     //   删除单条数据
     handleDelete(goods){
         //   console.log(goods)
         var id = goods.id
-        this.$axios({
-            url:`http://localhost:8899/admin/goods/del/${id}`,
-            method:"GET"
-        }).then(res=>{
-                const {message , status} = res.data
-                if(status===0){
-                    this.$message.success("删除成功")
-                    // 请求列表数据
-                    this.getList()
-                }
-                if(status===1){
-                    this.$message.error(message)    
-                }
-            })
+        this.deleteGoods(id)
     },
 
 
