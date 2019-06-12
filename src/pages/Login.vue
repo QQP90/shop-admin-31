@@ -53,7 +53,7 @@ export default {
             // 处理session跨域
             withCredentials: true
           }).then(res => {
-            console.log(res);
+            // console.log(res);
             var { message, status } = res.data;
             // 登陆成功
             if (status === 0) {

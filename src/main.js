@@ -16,10 +16,13 @@ import Register from "./pages/Register.vue"
 import Admin from "./pages/Admin.vue"
 import GoodsList from "./pages/GoodsList.vue"
 import CategryList from "./pages/CategryList.vue"
+import GoodsAdd from "./pages/GoodsAdd.vue"
+import GoodsEdit from "./pages/GoodsEdit.vue"
 
 
 // 注册VueRouter
 Vue.use(VueRouter);
+
 // 注册组件element
 Vue.use(ElementUI);
 Vue.config.productionTip = false
@@ -43,6 +46,12 @@ const routes = [
       },
       {
         path:"categry-list", meta:"栏目管理", component:CategryList
+      },
+      {
+        path:"goods-add", meta:"添加商品", component:GoodsAdd
+      },
+      {
+        path:"goods-edit/:id", meta:"编辑商品", component:GoodsEdit
       }
     ]
   }
@@ -50,6 +59,35 @@ const routes = [
 // 创建路由实例
 const router = new VueRouter({
   routes
+})
+router.beforeEach((to, from, next)=>{
+  // console.log(to,from)
+  axios({
+    url:"http://localhost:8899/admin/account/islogin",
+    method:"GET",
+    // 处理session跨域
+    withCredentials: true
+  }).then(res=>{
+    // console.log(res)
+    const {code} = res.data
+    // 未登录状态
+    if(to.path==="/login"){
+      if(code==="logined"){
+        next("/admin/goods-list")
+      }else{
+        next()
+      }
+    }
+    // 如果已经登录
+    else{
+      if(code==="logined"){
+        next()
+      }else{
+        next("/login")
+      }
+    }
+  })
+  
 })
 
 

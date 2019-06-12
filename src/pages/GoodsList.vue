@@ -2,18 +2,20 @@
 <div>
     <el-row type="flex" justify="space-between">
         <div>
-              <el-button>新增</el-button>
+              <el-button @click="handleGoodsAdd">新增</el-button>
               <el-button type="danger" @click="handleDeleteMore">删除</el-button>
         </div>
         <div>
-             <el-input placeholder="请输入内容" v-model="secrchInput">
+             <el-input placeholder="请输入内容" v-model="secrchValue">
                 <el-button slot="append" icon="el-icon-search"  @click="handleSecrch"></el-button>
              </el-input>
         </div>
     </el-row>
         <!-- 表格布局 -->
             <!-- 多选表格+自定义模板列表  -->
-    <el-table
+    <el-row type="flex" justify="space-between">
+         <el-table
+            class="goods-felx"
             ref="multipleTable"
             :data="tableData"
             tooltip-effect="dark"
@@ -29,7 +31,7 @@
             <!-- slot-scope代表每一项的数据对象 -->
             <template slot-scope="scope">
                 <el-row type="flex" align="middle">
-                    <img src="../assets/lyf.jpg" alt="" class="goods-list">
+                    <img :src="scope.row.imgurl" alt="" class="goods-list">
                     <div>
                         {{scope.row.title}}
                     </div>
@@ -39,23 +41,25 @@
         <el-table-column
             label="类型"
             prop="categoryname"
-            width="120">
+            width="300">
         </el-table-column>
             <el-table-column
             label="价格"
             prop="sell_price"
-            width="120">
+            width="300">
         </el-table-column>
-        <el-table-column label="操作">
-            <template slot-scope="scope">
-                <el-button
-                @click="handleEdit( scope.row)">编辑</el-button>
-                <el-button
-                type="danger"
-                @click="handleDelete( scope.row)">删除</el-button>
-            </template>
-        </el-table-column>
+            <el-table-column label="操作">
+                <template slot-scope="scope">
+                    <el-button
+                    @click="handleEdit( scope.row)">编辑</el-button>
+                    <el-button
+                    type="danger"
+                    @click="handleDelete( scope.row)">删除</el-button>
+                </template>
+            </el-table-column>
     </el-table>
+    </el-row>
+   
     <!-- 分页
         size-change:显示条数切换
         current-change：页数切换
@@ -87,21 +91,24 @@ data() {
         pageSize:5,
         total:0,
         ids:[],
-        secrchInput:""
+        secrchValue:""
 
       }
     },
 
 methods: {
+    // 发送请求的函数
     getList(){
         this.$axios({
-            url:`http://localhost:8899/admin/goods/getlist?pageIndex=${this.pageIndex}&pageSize=${this.pageSize}&searchvalue=${this.secrchInput}`,
+            url:`http://localhost:8899/admin/goods/getlist?pageIndex=${this.pageIndex}&pageSize=${this.pageSize}&searchvalue=${this.secrchValue}`,
             method:"GET"
         }).then(res=>{
+                // console.log(res.data)
                 this.tableData=res.data.message
                 this.total = res.data.totalcount
             })
     },
+    // 删除函数的封装
     deleteGoods(ID){
          this.$axios({
             url:`http://localhost:8899/admin/goods/del/${ID}`,
@@ -124,7 +131,8 @@ methods: {
     },
 //   编辑页面
     handleEdit(goods){
-        console.log(goods)
+        // console.log(goods)
+        this.$router.push("/admin/goods-edit/"+goods.id)
     },
 
 //   删除多条数据
@@ -156,20 +164,27 @@ methods: {
     },
     handleSecrch(){
         this.getList()
+    },
+    handleGoodsAdd(){
+        this.$router.push("/admin/goods-add")
     }
 },
 mounted(){
     this.getList()
-}
+ }
 
 }
 </script>
 
 <style>
     .goods-list{ 
-         flex-shrink: 0;
+        flex-shrink: 0;
         width: 60px;
         height: 40px;
-      
+        object-fit: cover;
     }
+  /* .goods-felx{
+      display: flex;
+      justify-content: space-between
+  } */
 </style>
