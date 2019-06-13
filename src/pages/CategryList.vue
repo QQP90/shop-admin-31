@@ -15,7 +15,7 @@
       <span class="custom-tree-node" slot-scope="{ node, data }">
           <!-- {node,data} 相当于const{node,data} =scope-->
           <!-- scope.data:代表每一行的数据对象，scope.node代表着没一行的对象 -->
-        <span>{{ data.title }}</span>
+        <span  class="select">{{ data.title }}</span>
         <span>
             <input :value="data.sort_id" class="box-ins" @blur="handleBlur($event,data)"/>
         </span>
@@ -67,7 +67,7 @@ import { constants } from 'crypto';
           if(data.sort_id==event.target.value){
               return
           }
-          var res = window.comirm("是否确认编辑？")
+          var res = window.confirm("是否确认编辑？")
           if(res){
 
         
@@ -109,5 +109,8 @@ import { constants } from 'crypto';
   }
   .box-ins{
       width: 30px;
+  }
+  .select{
+    width: 100px;
   }
 </style>

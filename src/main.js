@@ -10,14 +10,14 @@ import VueRouter from "vue-router"
 import axios from "axios"
 // 引入Login组件
 import Login from "./pages/Login.vue"
-// 引入Register组件
-import Register from "./pages/Register.vue"
 // 引入Admin组件
 import Admin from "./pages/Admin.vue"
 import GoodsList from "./pages/GoodsList.vue"
 import CategryList from "./pages/CategryList.vue"
 import GoodsAdd from "./pages/GoodsAdd.vue"
 import GoodsEdit from "./pages/GoodsEdit.vue"
+//导入vuex中的store
+import store from "./store"
 
 
 // 注册VueRouter
@@ -93,5 +93,7 @@ router.beforeEach((to, from, next)=>{
 
 new Vue({
   render: h => h(App),
-  router
+  router,
+  // 仓库对象
+  store
 }).$mount('#app')

@@ -173,7 +173,7 @@ export default {
         },
         // 多张照片
         handleRemove(file, fileList) {
-            console.log(fileList);
+            // console.log(fileList);
             // 把删除后fileList（数组）的response的值返回给this.form.fileList
            this.form.fileList = fileList.map(v=>{
                 return v.response
